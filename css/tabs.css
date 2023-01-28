@@ -1,0 +1,84 @@
+#partGeneralLic{
+  margin: 0 auto;
+  width: 1100px;
+}
+
+#tabs {
+    overflow: hidden;
+    /*width: 100%;*/
+    width: 877px;
+    /*margin: 0;
+    padding: 0;*/
+    margin: 0 auto;
+    padding: 30px 0 0;
+
+    list-style: none;
+  }
+
+  #tabs li {
+    float: left;
+    margin: 0 -15px 0 0;
+  }
+
+  #tabs a {
+    float: left;
+    position: relative;
+    padding: 0 40px;
+    height: 0;
+    line-height: 30px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff; 
+    border-left: 30px solid transparent;     
+    border-right: 30px solid transparent;
+    border-bottom: 30px solid #3D3D3D;
+    border-bottom-color: #777\9;
+    opacity: .3;
+    filter: alpha(opacity=30);      
+  }
+
+  #tabs a:hover,
+  #tabs a:focus {
+    /*border-bottom-color: #2ac7e1;*/
+    border-bottom-color: #007dbd;
+    opacity: 1;
+    filter: alpha(opacity=100);
+  }
+
+  #tabs a:focus {
+    outline: 0;
+  }
+
+  #tabs #current {
+    z-index: 3;
+    border-bottom-color: #3d3d3d;
+    opacity: 1;
+    filter: alpha(opacity=100);      
+  }
+
+  /* ----------- */
+  #content {
+      background: #fff;
+      border-top: 2px solid #3d3d3d;
+      /*padding: 2em;*/
+      padding: 5px;
+      /*height: 220px;*/
+      /*border-radius: 15px;*/
+  }
+
+  #content h2,
+    #content h3,
+    #content p {
+      margin: 0 0 15px 0;
+  }  
+
+  /* Demo page only */
+  #about {
+      color: #999;
+      text-align: center;
+      font: 0.9em Arial, Helvetica;
+  }
+
+  #about a {
+      color: #777;
+  }  

@@ -1,0 +1,276 @@
+.notificacion{
+  position:relative;
+  padding:15px;
+  margin:1em 0 3em;
+  color:#fff;
+  background:#075698; /* default background for browsers without gradient support */
+  /* css3 */
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#2e88c4), to(#075698));
+  background:-moz-linear-gradient(#2e88c4, #075698);
+  background:-o-linear-gradient(#2e88c4, #075698);
+  background:linear-gradient(#2e88c4, #075698);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+.notificacion:after {
+  content:"";
+  position:absolute;
+  bottom:-20px; /* value = - border-top-width - border-bottom-width */
+  left:50px; /* controls horizontal position */
+  border-width:20px 0 0 20px; /* vary these values to change the angle of the vertex */
+  border-style:solid;
+  border-color:#075698 transparent;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+p{
+	text-align: justify !important;
+}
+footer{
+  margin-top: 5px;
+  background: #D1D1D1;
+  text-align: center;
+  font-size: 13px;
+  color: gray;
+}
+.centrado{
+	width: 50%;
+	height: 30%;
+	margin: 0 auto;
+	position: center;
+}
+
+.logout{
+  text-align: right;
+  background: #F0F0F0;
+}
+
+.logout span{
+  margin-right: 10px;
+}
+
+#roles{
+	background-color: #DEDEDE;
+	border: 0px;
+}
+.border{
+	border-radius: 5px;
+}
+.error
+{
+	color: #e53935;
+	font-weight: normal;
+}
+.panel
+{
+	margin-top: 2%;
+	margin-bottom: 2%;
+	border:0 !important;
+}
+.panel-heading
+{
+	
+	background-image: linear-gradient(to bottom,#01509d 0,#01509d 100%) !important;
+}
+.panel-body
+{	
+	background:url('../imagenes/fondo_form.png'); 
+	background-size: fixed;   
+}
+
+.todo-contenido{
+	width:100%;  
+	margin: 0 auto;  
+	background:url('../imagenes/logo_fondo.png');  
+	background-size: cover;  
+	background-attachment: fixed;
+	background-position: top center;
+}
+
+.ancho{
+	width: 55%;
+}
+
+
+.instruccion{
+	font-size: 15px; 
+	line-height: 30px; 
+	padding: 0 0 10px; 
+	text-align: justify;
+}
+
+.uno, .dos, .tres, .cuatro,
+.cinco, .seis, .siete, .ocho, 
+.nueve, .diez, .once, .doce{
+	display: inline-flex;
+	/*vertical-align: middle;*/
+}
+
+.uno{
+	width:8%;  
+}
+
+.dos{
+	width:16%;  
+}
+
+.tres{
+	width:25%; 
+}
+
+.cuatro{
+	width:33%; 
+}
+
+.cinco{
+	width: 41%; 
+}
+
+.seis{
+	width: 50%;  
+}
+
+.siete{
+	width:58%;      
+}
+
+.ocho{
+	width: 66%; 
+}
+
+.nueve{
+	width: 74%;  
+}
+
+.diez{
+	width: 83%;  
+}
+
+.once{
+	width:91%;  
+}
+
+.doce{
+	width: 100%;  
+}
+
+label{
+	font-size: 12px;
+	margin: 0 0;
+}
+
+div label{
+	vertical-align: middle;
+}
+
+.separador{
+	margin-right: 10px;
+	display: inline-block;
+}
+
+.form-group{
+	margin-bottom: 20px !important;
+}
+
+.checkbox label{
+	margin-bottom: 10px !important;
+	margin-left: 10px !important;
+}
+
+.imgbutton{
+	text-indent:100%;
+	width: 100%;
+	display: inline-block;    
+	vertical-align: middle;
+	width:35px;
+	height:35px;
+}
+
+.login_icon{
+	background:url('../imagenes/login_icon.png');    
+	background-size: 100% 100%;
+}
+
+.btnsinfondo{
+	background-color:transparent;
+	border: none;
+}
+
+.diagnostico_icon{
+	background:url('../imagenes/busqueda_icon.png');    
+	background-size: 100% 100%;
+}
+
+.admin_users{
+	background:url('../imagenes/admin_users.png');    
+	background-size: 100% 100%;
+}
+
+.adm_users{
+	display:inline-block;
+	float:none;
+}
+
+.permisos_users{
+	background:url('../imagenes/permisos_users.png');    
+	background-size: 100% 100%;
+}
+
+.roles_users{
+	background:url('../imagenes/roles_users.png');    
+	background-size: 100% 100%;
+}
+
+.informes_icon{
+	background:url('../imagenes/informes_icon.png');    
+	background-size: 100% 100%;
+}
+
+.oculto{
+	display: none;
+}
+
+.actividades th
+{
+	background:rgba(34,34,34,.25);
+}
+
+.actividades tr th{
+	min-width: 8em;
+	text-align: center;	
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	padding: 0 !important;
+}
+
+.actividades tbody tr{
+	text-align: center;
+	background: rgba(255,255,255,.8);	
+}
+.actividades tbody tr:nth-child(2n+1){
+	background: rgba(255,255,255,.4);
+}
+@media(max-width: 1500px)
+{
+	.centrado{
+		width: 70%;
+	}
+}
+
+@media(max-width: 900px)
+{
+	.centrado{
+		width: 90%;
+	}
+}
+
+@media(max-width: 500px)
+{
+	.centrado{
+		width: 100%;
+	}
+}

@@ -1,0 +1,300 @@
+/*Autor: Jesus Malo Escobar
+ email: dic.malo@gmail.com
+ Cel. 9621332427
+ 01/09/2015
+*/
+CREATE DATABASE dncdb CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE dncdb;
+
+/*CREACION DE TABLAS PARA EL ACCESO A USUARIOS*/
+CREATE TABLE usuarios_sistema(
+	idUser SMALLINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	user varchar(25) NOT NULL,
+	password TINYTEXT NOT NULL,
+	email TINYTEXT NOT NULL,
+	nombre TINYTEXT NOT NULL,
+	vigente TINYINT(1) DEFAULT 1,
+	fechaCaptura TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)ENGINE=INNODB;
+
+insert into usuarios_sistema(user,password,email,nombre,vigente) values('jesus.malo','c9acd907f21fa81033a64809fd73e991','dic.malo@gmail.com','Jesús Malo Escobar',1);
+
+CREATE TABLE roles(
+	idRol SMALLINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	nombreRol VARCHAR(25) NOT NULL
+)ENGINE=INNODB;
+
+insert into roles(nombreRol) values('Superusuario');
+
+CREATE TABLE recursos(
+	idRecurso SMALLINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	nombreRecurso TINYTEXT NOT NULL	
+)ENGINE=INNODB;
+
+insert into recursos(nombreRecurso) values('FAdminPermisos'),('FAdminRoles'),('FAdminUsuarios'),('FAdminRecursos'),('FReportes'),('FDiagnostico');
+
+CREATE TABLE permisos_rol(
+	idPermiso SMALLINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	idRol SMALLINT UNSIGNED NOT NULL,
+	idRecurso SMALLINT UNSIGNED NOT NULL,
+	lectura TINYINT(1) NOT NULL,
+	escritura TINYINT(1) NOT NULL,
+	actualizacion TINYINT(1) NOT NULL,
+	eliminacion TINYINT(1) NOT NULL,
+	FOREIGN KEY (idRol) REFERENCES roles(idRol) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (idRecurso) REFERENCES recursos(idRecurso) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+insert into permisos_rol(idRol,idRecurso,lectura,escritura,actualizacion,eliminacion) values(1,1,1,1,1,1),(1,2,1,1,1,1),(1,3,1,1,1,1),(1,4,1,1,1,1),(1,5,1,1,1,1);
+
+CREATE TABLE rol_del_usuario(
+	cns_rol_usuario SMALLINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	idRol SMALLINT UNSIGNED,
+	idUser SMALLINT UNSIGNED,
+	FOREIGN KEY (idRol) REFERENCES roles(idRol) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (idUser) REFERENCES usuarios_sistema(idUser) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+insert into rol_del_usuario(idRol,idUser) values(1,1);
+
+
+ /*TABLAS DE LA BASE DE DATOS*/
+CREATE TABLE area_formacion(
+	id_af TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_af VARCHAR(30)
+)ENGINE=INNODB;
+
+INSERT INTO area_formacion(desc_af) values('Ciencias de la salud'),('Ciencias sociales'),('Ciencias exactas/Ingenierias'),('Ciencias Quimicas/Biológicas'),('Arquitectura y Diseño'),('Lenguas'),('Económicas/Administrativas'),('Tecnologías'),('Humanidades'),('Arte y Cultura'),('Ética'),('Otro');
+
+CREATE TABLE area_capacitacion(
+	id_ac TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_ac VARCHAR(30)
+)ENGINE=INNODB;
+
+INSERT INTO area_capacitacion(desc_ac) VALUES('Curso'),('Taller'),('Diplomado'),('Seminario'),('Certificación'),('Licenciatura'),('Posgrado'),('Todas las anteriores');
+
+CREATE TABLE motivo_capacitacion(
+	id_mc TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_mc VARCHAR(30)
+)ENGINE=INNODB;
+
+INSERT INTO motivo_capacitacion(desc_mc) VALUES('Superación personal'),('Mejor desempeño laboral'),('Mejorar condición laboral'),('Otro (Especifíque)');
+
+CREATE TABLE habilidades_profesionales(
+	id_hp TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_hp VARCHAR(30)
+)ENGINE=INNODB;
+
+INSERT INTO habilidades_profesionales(desc_hp) VALUES('Uso de tecnologías'),('Lectura reflexiva'),('Creatividad'),('Social'),('Liderazgo'),('Comprensión verbal'),('Capacidad analítica'),('Capacidad de observación');
+
+CREATE TABLE nivel_estudios(
+	id_ne TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_ne VARCHAR(25)
+)ENGINE=INNODB;
+
+INSERT INTO nivel_estudios(desc_ne) VALUES('Primaria'),('Secundaria'),('Preparatoria/Bachillerato'),('Licenciatura'),('Posgrado'),('Ningúna');
+
+CREATE TABLE grados_satisfaccion(
+	id_gs TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_gs VARCHAR(25)
+)ENGINE=INNODB;
+
+INSERT INTO grados_satisfaccion(desc_gs) VALUES('Muy satisfecho'),('Satisfecho'),('Indiferente'),('Insatisfecho'),('Muy insatisfecho');
+
+CREATE TABLE modalidad_capacitacion(
+	id_mod TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_mod VARCHAR(30)
+)ENGINE=INNODB;
+
+CREATE TABLE lugar_capacitacion(
+	id_lc TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_lc TINYTEXT
+)ENGINE=INNODB;
+
+insert into lugar_capacitacion(desc_lc) values('Dentro del centro de trabajo'),('Aula fuera del centro de trabajo');
+
+INSERT INTO modalidad_capacitacion(desc_mod) VALUES('Presencial'),('A distancia (vía internet)'),('Semipresencial(mixta)');
+
+CREATE TABLE rango_horas(
+	id_rh TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_rh TINYTEXT
+)ENGINE=INNODB;
+
+INSERT INTO rango_horas(desc_rh) VALUES('1-2 horas'),('3-4 horas'),('5-6 horas'),('7-8 horas'),('Más de 8 horas');
+
+CREATE TABLE estado_civil(
+	id_ec TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_ec TINYTEXT
+)ENGINE=INNODB;
+
+INSERT INTO estado_civil(desc_ec) values('Soltero'),('Casado');
+
+CREATE TABLE usuarios(
+	id_usuario INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	idUser SMALLINT UNSIGNED,
+	id_ne TINYINT UNSIGNED,
+	id_ec TINYINT UNSIGNED,
+	edad TINYINT,
+	sexo CHAR(1),
+	puesto TINYTEXT,
+	email TINYTEXT,
+	telefono VARCHAR(13),
+	discapacidad VARCHAR(50),
+	fechaRegistro TIMESTAMP default CURRENT_TIMESTAMP,
+	FOREIGN KEY(idUser) REFERENCES usuarios_sistema(idUser) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_ne) REFERENCES nivel_estudios(id_ne) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_ec) REFERENCES estado_civil(id_ec) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE det_reg_habs_profs_tiene(
+	id_det_reg_habs_profs_tiene INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	id_usuario INTEGER UNSIGNED,
+	id_hp TINYINT UNSIGNED,
+	FOREIGN KEY(id_usuario) REFERENCES usuarios(id_usuario) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_hp) REFERENCES habilidades_profesionales(id_hp) ON UPDATE CASCADE ON DELETE CASCADE	
+)ENGINE=INNODB;
+
+CREATE TABLE det_reg_habs_profs_requiere(
+	id_det_reg_habs_profs_requiere INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	id_usuario INTEGER UNSIGNED,
+	id_hp TINYINT UNSIGNED,
+	FOREIGN KEY(id_usuario) REFERENCES usuarios(id_usuario) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_hp) REFERENCES habilidades_profesionales(id_hp) ON UPDATE CASCADE ON DELETE CASCADE	
+)ENGINE=INNODB;
+
+CREATE TABLE licenciaturas(
+	id_lics INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_lics TINYTEXT,
+	vigente TINYINT(1) DEFAULT 1
+)ENGINE=INNODB;
+
+INSERT INTO licenciaturas(desc_lics) VALUES('Gestión de la Micro, Pequeña y Mediana Empresa'),
+											('Estadística y Sistemas de Información'),
+											('Tecnologías de Información y Comunicación aplicadas a la Educación'),
+											('Desarrollo  Municipal  y  Gobernabilidad'),
+											('Gerencia Social'),
+											('Seguridad de Poblaciones Humanas ante desastres'),
+											('Inglés'),
+											('Derechos Humanos'),
+											('Seguridad Alimentaria');
+
+CREATE TABLE estrategias_aprendizaje(
+	id_eap TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	desc_eap TINYTEXT
+)ENGINE=INNODB;
+
+INSERT INTO estrategias_aprendizaje(desc_eap) VALUES('Mapas conceptuales'),('Cuadros sinópticos'),('Tablas comparativas');
+
+CREATE TABLE registro_dnc(
+	cns_reg_dnc INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	id_usuario INTEGER UNSIGNED,
+	gs_desa_prof TINYINT UNSIGNED,
+	gs_capprop_emp TINYINT UNSIGNED,	
+	id_mod TINYINT UNSIGNED,
+	id_lc TINYINT UNSIGNED,
+	id_mc TINYINT UNSIGNED,
+	id_rh TINYINT UNSIGNED,
+	turno_cap CHAR(1),	
+	dias_sem_cap VARCHAR(20),
+	conoce_ofer_educon BOOL,
+	comentarios TINYTEXT,
+	fechaRegistro TIMESTAMP default CURRENT_TIMESTAMP,
+	FOREIGN KEY(id_usuario) REFERENCES usuarios(id_usuario) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(gs_desa_prof) REFERENCES grados_satisfaccion(id_gs) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(gs_capprop_emp) REFERENCES grados_satisfaccion(id_gs) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_mod) REFERENCES modalidad_capacitacion(id_mod) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_lc) REFERENCES lugar_capacitacion(id_lc) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_mc) REFERENCES motivo_capacitacion(id_mc) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_rh) REFERENCES rango_horas(id_rh) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE otro_motivo_capacitacion(
+	id_omc TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	cns_reg_dnc INTEGER UNSIGNED,
+	desc_omc TINYTEXT,
+	FOREIGN KEY(cns_reg_dnc) REFERENCES registro_dnc(cns_reg_dnc) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE otra_area_formacion(
+	id_oaf TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	cns_reg_dnc INTEGER UNSIGNED,
+	desc_oaf TINYTEXT,
+	FOREIGN KEY(cns_reg_dnc) REFERENCES registro_dnc(cns_reg_dnc) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE otra_habilidad_prof_tiene(
+	id_ohpt INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	id_usuario INTEGER UNSIGNED,
+	desc_ohpt TINYTEXT,
+	FOREIGN KEY(id_usuario) REFERENCES usuarios(id_usuario) ON UPDATE CASCADE ON DELETE CASCADE	
+)ENGINE=INNODB;
+
+CREATE TABLE otra_habilidad_prof_requiere(
+	id_ohpr INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	id_usuario INTEGER UNSIGNED,
+	desc_ohpr TINYTEXT,
+	FOREIGN KEY(id_usuario) REFERENCES usuarios(id_usuario) ON UPDATE CASCADE ON DELETE CASCADE	
+)ENGINE=INNODB;
+
+CREATE TABLE area_capacitacion_tiene(
+	cns_detregac_t INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	cns_reg_dnc INTEGER UNSIGNED,
+	id_ac TINYINT UNSIGNED,
+	FOREIGN KEY(cns_reg_dnc) REFERENCES registro_dnc(cns_reg_dnc) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_ac) REFERENCES area_capacitacion(id_ac) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE area_capacitacion_requiere(
+	cns_detregac_r INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	cns_reg_dnc INTEGER UNSIGNED,
+	id_ac TINYINT UNSIGNED,
+	FOREIGN KEY(cns_reg_dnc) REFERENCES registro_dnc(cns_reg_dnc) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_ac) REFERENCES area_capacitacion(id_ac) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE area_formacion_tiene(
+	cns_detregaf_t INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	cns_reg_dnc INTEGER UNSIGNED,
+	id_af TINYINT UNSIGNED,
+	FOREIGN KEY(cns_reg_dnc) REFERENCES registro_dnc(cns_reg_dnc) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_af) REFERENCES area_formacion(id_af) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE area_formacion_requiere(
+	cns_detregaf_r INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	cns_reg_dnc INTEGER UNSIGNED,
+	id_af TINYINT UNSIGNED,
+	temas_interes TEXT,
+	FOREIGN KEY(cns_reg_dnc) REFERENCES registro_dnc(cns_reg_dnc) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(id_af) REFERENCES area_formacion(id_af) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE licenciaturas_eleccion(
+	id_le INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	id_lics INTEGER UNSIGNED,
+	cns_reg_dnc INTEGER UNSIGNED,
+	FOREIGN KEY(id_lics) REFERENCES licenciaturas(id_lics) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(cns_reg_dnc) REFERENCES registro_dnc(cns_reg_dnc) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE otra_licenciatura_requiere(
+	id_olr TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	cns_reg_dnc INTEGER UNSIGNED,
+	desc_olr TINYTEXT,
+	FOREIGN KEY(cns_reg_dnc) REFERENCES registro_dnc(cns_reg_dnc) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE estrategias_aprendizaje_tiene(
+	id_eat INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	id_eap TINYINT UNSIGNED,
+	cns_reg_dnc INTEGER UNSIGNED,	
+	FOREIGN KEY(id_eap) REFERENCES estrategias_aprendizaje(id_eap) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY(cns_reg_dnc) REFERENCES registro_dnc(cns_reg_dnc) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE otra_estrategia_aprendizaje_tiene(
+	id_oeat INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,	
+	cns_reg_dnc INTEGER UNSIGNED,
+	desc_oeat TINYTEXT,	
+	FOREIGN KEY(cns_reg_dnc) REFERENCES registro_dnc(cns_reg_dnc) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;

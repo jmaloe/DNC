@@ -1,0 +1,10 @@
+.bg-pic {
+    background-image: url("../admin/bg.jpg");
+}
+html, body {
+    background-attachment: fixed;
+    background-position: 50% 50%;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
